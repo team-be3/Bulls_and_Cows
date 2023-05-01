@@ -29,17 +29,32 @@ def checkAnswer(inputNum, answer):
         elif inputNum[i] in answer:
             ball += 1
     if strike == 4:
-        print("정답입니다!")
+        result = "정답입니다!"
     else:
-        print("스트라이크: {}, 볼: {}".format(strike, ball))
+        result = "스트라이크: {}, 볼: {}".format(strike, ball)
+    return result
+
+#재도전 여부 판별 함수
+def retry():
+     while True:
+        retry = input("다시 시작([0] 아니오, [1] 예)")      
+        if retry == "0":
+            exit()
+        elif retry == "1":
+            break
+        else:
+            print("잘못 입력하셨습니다.")
 
 if __name__ == '__main__':
-    answer = generateAnswer()
-    inNum = inputNum()
-    print(inNum)
     while True:
-        inNum = inputNum()
-        checkAnswer(inNum, answer)
-        if checkAnswer(inNum, answer) == "정답입니다!":
-            break
-
+        answer = generateAnswer()
+        count = 0
+        while count < 10:
+            inNum = inputNum()
+            print(checkAnswer(inNum, answer))
+            if checkAnswer(inNum, answer) == "정답입니다!":
+                break
+            count += 1
+        if count >= 10:
+            print(f"GAME OVER... the answer is {answer}")
+        retry()
